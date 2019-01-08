@@ -16,6 +16,10 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Montserrat:400,700" !de
 // Navbar ======================================================================
 
 .navbar {
+  padding: 0rem 1rem;
+  // margin: .5rem 1rem;
+  height: 70px;
+
   border-width: 1px;
   border-style: solid;
 
@@ -26,6 +30,19 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Montserrat:400,700" !de
   &-fixed-bottom {
     border-top-width: 1px 0 0 0;
     border-style: solid;
+  }
+}
+
+.navbar-nav {
+  height: 70px;
+
+  .nav-link {
+    padding: 1.5rem 1rem;
+
+    &.active {
+      padding-bottom: 0px;
+      border-bottom: 4px solid $red;
+    }
   }
 }
 
