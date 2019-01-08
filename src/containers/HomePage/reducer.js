@@ -26,7 +26,7 @@ export function subredditReducer(state = subredditState, action) {
             }
             return { ...state, request: false, ui }
         case SUBREDDIT_FAILURE:
-            return { ...state, request: false }
+            return { ...state, request: false, error: payload }
         default:
             return state
     }

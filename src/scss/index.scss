@@ -3,13 +3,29 @@
 @import '~bootstrap/scss/bootstrap.scss';
 @import 'boostwatch';
 @import 'grad';
-
-
-.margin-auto {
-  margin: 0 auto;
-}
+@import 'helpers';
 
 .img-header {
   height: 40px;
   padding-left: 20px;
+}
+
+.sidebar {
+  ul {
+    li {
+      padding: 10px 0;
+
+      a {
+        color: #757575;
+        &:hover {
+          color: $red;
+          text-decoration: none;
+        }
+        &.active {
+          color: $red;
+          text-decoration: none;
+        }
+      }
+    }
+  }
 }
