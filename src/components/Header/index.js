@@ -4,14 +4,7 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
 } from 'reactstrap';
 
 
@@ -36,8 +29,8 @@ export default class Header extends Component {
 
             <Navbar color="light" light expand="md">
                 <Link className="navbar-brand" to="/">
-                    <img src="/reddit.png" width="30" height="30" class="d-inline-block align-top img-fluid" alt="reddit" />
-                    <img src="/reddit-name.png" width="80" height="30" class="d-inline-block align-top img-fluid" alt="reddit" />
+                    <img src="/reddit.png" width="30" height="30" className="d-inline-block align-top img-fluid" alt="reddit" />
+                    <img src="/reddit-name.png" width="80" height="30" className="d-inline-block align-top img-fluid" alt="reddit" />
                 </Link>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>

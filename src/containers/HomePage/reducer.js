@@ -2,7 +2,8 @@ import {
     SUBREDDIT_REQUEST,
     SUBREDDIT_SUCCESS,
     SUBREDDIT_FAILURE,
-    SUBREDDITLIST
+    SUBREDDITLIST,
+    SUBREDDITHIDE
 } from './constants';
 
 const subredditState = {
@@ -27,6 +28,12 @@ export function subredditReducer(state = subredditState, action) {
             return { ...state, request: false, ui }
         case SUBREDDIT_FAILURE:
             return { ...state, request: false, error: payload }
+        case SUBREDDITHIDE:
+            const ui2 = state.ui.map(item => ({
+                hidden: item.id === payload ? true: false,
+                ...item
+            }));
+            return { ...state, ui: ui2}
         default:
             return state
     }

@@ -6,6 +6,7 @@ import NotFound from '../../components/404'
 import Header from '../../components/Header'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import Theme from '../../components/Theme/Loadable'; // to get the components
+import PosedRouter from '../../components/Animation/PosedRouter'
 
 const AppWrapper = styled.div`
   height: 100%;
@@ -17,13 +18,15 @@ class App extends Component {
         return (
             <AppWrapper>
                 <Header/>
-                <Switch>
-                    <Redirect exact from="/notfound" to="/" />
-                    <Route exact path="/" component={HomePage} />
-                    <Route exact path="/theme" component={Theme} />
-                    <Route exact path="/r/:subreddit" component={HomePage} />
-                    <Route path="*" component={NotFound} />
-                </Switch>
+                <PosedRouter>
+                    <Switch>
+                        <Redirect exact from="/notfound" to="/" />
+                        <Route exact path="/" component={HomePage} />
+                        <Route exact path="/theme" component={Theme} />
+                        <Route exact path="/r/:subreddit" component={HomePage} />
+                        <Route path="*" component={NotFound} />
+                    </Switch>
+                </PosedRouter>
             </AppWrapper>
         );
     }

@@ -3,7 +3,8 @@ import {
     SUBREDDIT_REQUEST,
     SUBREDDIT_SUCCESS,
     SUBREDDIT_FAILURE,
-    SUBREDDITLIST   
+    SUBREDDITLIST,
+    SUBREDDITHIDE
 } from './constants';
 
 export const getSubreddit = (subreddit) => (dispatch, getState) => {
@@ -24,6 +25,13 @@ export const getSubreddit = (subreddit) => (dispatch, getState) => {
     })
 }
 
+export const redditHide = (subreddit) => (dispatch, getState) => {
+    dispatch({
+        type: SUBREDDITHIDE,
+        payload: subreddit
+    })
+}
+
 export const getSubList = () => (dispatch, getState) => {
     const payload = ['alternativeart', 'pics', 'gifs', 'adviceanimals', 'cats', 'images', 'photoshopbattles', 'hmmm', 'all', 'aww']
     dispatch({
@@ -36,4 +44,5 @@ export const getSubList = () => (dispatch, getState) => {
 export default {
     getSubreddit,
     getSubList,
+    redditHide,
 }
