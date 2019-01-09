@@ -38,11 +38,12 @@ export default class Header extends Component {
                         <Link className="nav-item nav-link" activeClassName="active" to="/r/adviceanimals" href="/r/adviceanimals" >adviceanimals <span className="sr-only">(current)</span></Link>
                         <Link className="nav-item nav-link" activeClassName="active" to="/r/cats" href="/r/cats">cats</Link>
                         <Link className="nav-item nav-link" activeClassName="active" to="/r/images" href="/r/images">images</Link>
+                        <Link className="nav-item nav-link" activeClassName="active" to="/theme" href="/theme">theme</Link>
                     </Nav>
-                    <ul className="nav navbar-nav ml-auto">
+                    <Nav className="navbar-nav ml-auto d-none d-md-block" navbar>
                         <Link className="nav-item nav-link" activeClassName="active" to="/r/notification" href="/r/notification" ><i className="far fa-bell"></i></Link>
-                    </ul>
-                    <Link className="navbar-brand" to="/">
+                    </Nav>
+                    <Link className="navbar-brand d-none d-md-block" to="/">
                         <img src='/user.jpg' alt="user" className="img-fluid rounded-circle img-header" />
                     </Link>
                 </Collapse>

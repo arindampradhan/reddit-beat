@@ -5,8 +5,6 @@ import {Box} from '../Animation';
 import { decodeHTMLEntities, timeSince  } from '../../utils/helpers'
 import Truncate from 'react-truncate';
 
-// `https://embed.redditmedia.com/widgets/embed?url=${url}`
-
 export default class ListView extends Component {
     state = {
         toggle: false,
@@ -27,10 +25,10 @@ export default class ListView extends Component {
   render() {
     const { title, selftext, selftext_html, author, ups, downs, hide, id, created_utc, hidden, thumbnail, num_comments, permalink } = this.props
       
-    if (hidden) return <div/>;
+    if (hidden) return <Box/>;
     const renderer = (
       <>
-        <div className="card list-view">
+        <div className="card list-view ">
             <div className="card-body">
                 <div className="row">
                     <div className="col-12 col-lg-9" onClick={this.toggelImage}>
@@ -54,7 +52,7 @@ export default class ListView extends Component {
                             <div className="small-view" >
                                 {num_comments ? <a rel="noopener noreferrer" target="_blank" href={`https://www.reddit.com/${permalink}`} className="padding-r-10"><i className="far fa-comment"></i> {num_comments} Comments</a>:null}
                                 <a href onClick={() => hide(id)} className="padding-r-10"><i className="fas fa-ban"></i> Hide</a>
-                                <span className="padding-r-10"><i className="fas fa-share"></i> Share</span>
+                                <a href onClick={() => window.open(`https://embed.redditmedia.com/widgets/embed?url=https://www.reddit.com/${permalink}`, "", "width=600,height=500")} className="padding-r-10"><i className="fas fa-share"></i> Share</a>
                             </div>
                         </div>
                         {this.state.imgToggle && !(selftext_html && selftext) ? (
@@ -78,7 +76,7 @@ export default class ListView extends Component {
                         <div className="outer-div rectangle">
                             <div className="inner-div">
                                 <i className="fas fa-chevron-circle-up"></i>
-                                    <div className="count">{ups || <>-{downs}</>}</div>
+                                    <div className="count">{ups || (downs ? <>-{downs}</>: 0)}</div>
                                 <i className="fas fa-chevron-circle-down"></i>
                             </div>
                         </div>                    

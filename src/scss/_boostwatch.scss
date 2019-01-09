@@ -33,6 +33,23 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Montserrat:400,700" !de
   }
 }
 
+.collapse.show {
+  z-index: 100;
+  margin: 0 -15px;
+  background: white;
+  .navbar-nav {
+    height: auto;
+    .nav-link {
+      padding: 1.5rem 1rem;
+
+      &.active {
+        padding-bottom: 1.5rem;
+        border-bottom: 0;
+      }
+    }    
+  }
+}
+
 .navbar-nav {
   height: 70px;
 

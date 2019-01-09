@@ -4,7 +4,6 @@ import actions from './actions';
 import { NavLink as Link } from "react-router-dom";
 import ListView from '../../components/ListView';
 import ListViewLoader from '../../components/ListView/Loading'
-import PosedRouter from '../../components/Animation/PosedRouter';
 
 
 class HomePage extends Component {
@@ -31,8 +30,6 @@ class HomePage extends Component {
 
     render() {
         const { subredditList, match, subreddit} = this.props
-        
-
         
         return (
             <div className="container-fluid">
@@ -62,7 +59,7 @@ class HomePage extends Component {
                                     <img src={'/reddit2.png'} alt="Title" className="img-fluid img-title" /> &nbsp;/{match.params.subreddit}
                                 </h4>
                                 </div>
-                                <div className="col-6 text-right padding-0">
+                                <div className="col-6 text-right padding-0 d-none d-md-block">
                                     <button className="btn btn-primary gradient--loon-crest"><i className="fas fa-plus-circle"></i> SUBMIT</button>
                                 </div>
                             </div>

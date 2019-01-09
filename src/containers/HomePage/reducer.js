@@ -30,8 +30,8 @@ export function subredditReducer(state = subredditState, action) {
             return { ...state, request: false, error: payload }
         case SUBREDDITHIDE:
             const ui2 = state.ui.map(item => ({
-                hidden: item.id === payload ? true: false,
-                ...item
+                ...item,
+                hidden: item.id === payload ? true : false,
             }));
             return { ...state, ui: ui2}
         default:
