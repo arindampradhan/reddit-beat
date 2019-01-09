@@ -1,3 +1,11 @@
+# [Reddit beat](https://reddit-beat.netlify.com/)
+
+**[Demo](https://reddit-beat.netlify.com/)**
+
+![](https://raw.githubusercontent.com/arindampradhan/reddit-beat/master/public/1.png)
+
+![](https://raw.githubusercontent.com/arindampradhan/reddit-beat/master/public/2.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
