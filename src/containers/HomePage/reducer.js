@@ -1,54 +1,65 @@
 import {
-    SUBREDDIT_REQUEST,
-    SUBREDDIT_SUCCESS,
-    SUBREDDIT_FAILURE,
-    SUBREDDITLIST,
-    SUBREDDITHIDE
-} from './constants';
+  SUBREDDIT_REQUEST,
+  SUBREDDIT_SUCCESS,
+  SUBREDDIT_FAILURE,
+  SUBREDDITLIST,
+  SUBREDDITHIDE
+} from "./constants";
 
 const subredditState = {
-    ui: [],
-    request: false,
-}
-
+  ui: [],
+  request: false
+};
 export function subredditReducer(state = subredditState, action) {
-    const {payload, type} = action
+  const { payload, type } = action;
 
-    switch (type) {
-        case SUBREDDIT_REQUEST:
-            return { ...state, request: true }
-        case SUBREDDIT_SUCCESS:
-            let ui = []
-            if (payload.data && payload.data.children && payload.data.children.length) {
-                ui = payload.data.children.map(item => ({
-                    kind: item.kind,
-                    ...item.data
-                }));
-            }
-            return { ...state, request: false, ui }
-        case SUBREDDIT_FAILURE:
-            return { ...state, request: false, error: payload }
-        case SUBREDDITHIDE:
-            const ui2 = state.ui.map(item => ({
-                ...item,
-                hidden: item.id === payload ? true : false,
-            }));
-            return { ...state, ui: ui2}
-        default:
-            return state
-    }
+  switch (type) {
+    case SUBREDDIT_REQUEST:
+      return { ...state, request: true };
+    case SUBREDDIT_SUCCESS:
+      const { subreddit } = payload;
+      let ui = [];
+      if (
+        payload.data &&
+        payload.data.children &&
+        payload.data.children.length
+      ) {
+        ui = payload.data.children
+          .map(item => ({
+            kind: item.kind,
+            ...item.data
+          }))
+          .filter(item => {
+            return item.post_hint && item.post_hint === "image" ? true : false;
+          });
+      }
+      if (state && (!state[subreddit] || !state[subreddit].length)) {
+        return { ...state, request: false, ui, [subreddit]: ui };
+      }
+      return { ...state, request: false, ui };
+    case SUBREDDIT_FAILURE:
+      return { ...state, request: false, error: payload };
+    case SUBREDDITHIDE:
+      const ui2 = state.ui.map(item => ({
+        ...item,
+        hidden: item.id === payload ? true : false
+      }));
+      return { ...state, ui: ui2 };
+    default:
+      return state;
+  }
 }
 
 const subListState = {
-    ui: []
-}
+  ui: []
+};
 export function subredditListReducer(state = subListState, action) {
-    const { payload, type } = action
+  const { payload, type } = action;
 
-    switch (type) {
-        case SUBREDDITLIST:
-            return { ...state, ui : payload };
-        default:
-            return state;
-    }
+  switch (type) {
+    case SUBREDDITLIST:
+      return { ...state, ui: payload };
+    default:
+      return state;
+  }
 }

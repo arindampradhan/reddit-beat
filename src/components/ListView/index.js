@@ -1,94 +1,185 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import './index.scss';
-import {Box} from '../Animation';
-import { decodeHTMLEntities, timeSince  } from '../../utils/helpers'
-import Truncate from 'react-truncate';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import "./index.scss";
+import { Box } from "../Animation";
+import { decodeHTMLEntities, timeSince } from "../../utils/helpers";
+import Truncate from "react-truncate";
 
 export default class ListView extends Component {
-    state = {
-        toggle: false,
-        imgToggle: false
-    }
+  state = {
+    toggle: false,
+    imgToggle: false
+  };
   static propTypes = {
     prop: PropTypes
-  }
+  };
 
   toggle = () => {
-    this.setState({toggle: !this.state.toggle})
-  }
+    this.setState({ toggle: !this.state.toggle });
+  };
 
   toggelImage = () => {
-    this.setState({ imgToggle: !this.state.imgToggle })
-  }
-  
+    this.setState({ imgToggle: !this.state.imgToggle });
+  };
+
   render() {
-    const { title, selftext, selftext_html, author, ups, downs, hide, id, created_utc, hidden, thumbnail, num_comments, permalink } = this.props
-      
-    if (hidden) return <Box/>;
+    const {
+      title,
+      selftext,
+      selftext_html,
+      author,
+      ups,
+      downs,
+      hide,
+      id,
+      created_utc,
+      hidden,
+      thumbnail,
+      num_comments,
+      permalink,
+      preview,
+      url
+    } = this.props;
+    // const [originalImg, ...__] = preview.images[0].resolutions.reverse();
+
+    console.log(this.props);
+    if (hidden) return <Box />;
     const renderer = (
       <>
         <div className="card list-view ">
-            <div className="card-body">
-                <div className="row">
-                    <div className="col-12 col-lg-9" onClick={this.toggelImage}>
-                        <div className="padding-20">
-                            <span className="small-view">
-                                Posted by  <a rel="noopener noreferrer" target="_blank" href={`https://www.reddit.com/user/${author}`}>u/{author}</a>・{timeSince(created_utc*1000)} ago
-                            </span>
-                            <div className="title padding-t-15">{title}</div>
-                                <div>
-                                    {this.state.toggle ? (
-                                        <p className="content" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(selftext_html) }}/>
-                                    ) : (
-                                        <p className="content">
-                                            <Truncate lines={ 3 } ellipsis={ <div>... <a href className="text-primary pointer" onClick={this.toggle}>Read more</a></div>}>
-                                                {selftext || selftext_html}
-                                            </Truncate>
-                                         </p>
-                                    )}
-                                </div>
-                                {/* <p className="content" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(selftext)}} /> */}
-                            <div className="small-view" >
-                                {num_comments ? <a rel="noopener noreferrer" target="_blank" href={`https://www.reddit.com/${permalink}`} className="padding-r-10"><i className="far fa-comment"></i> {num_comments} Comments</a>:null}
-                                <a href onClick={() => hide(id)} className="padding-r-10"><i className="fas fa-ban"></i> Hide</a>
-                                <a href onClick={() => window.open(`https://embed.redditmedia.com/widgets/embed?url=https://www.reddit.com/${permalink}`, "", "width=600,height=500")} className="padding-r-10"><i className="fas fa-share"></i> Share</a>
-                            </div>
-                        </div>
-                        {this.state.imgToggle && !(selftext_html && selftext) ? (
-                            <div className="col-12 text-center padding-y-20">
-                                <img src={thumbnail} className="img-fluid w-75" alt="・" />
-                            </div>
-                        ) :null}
-                    </div>
-                    <div className="col-lg-2  d-none d-sm-block">
-                            {!this.state.imgToggle ? (
-                                <div className="outer-div">
-                                    <div className="inner-div" onClick={this.toggelImage}>
-                                        {thumbnail ? (
-                                            <img src={thumbnail} className="img-fluid screen text-right" alt="・" />
-                                        ) : null}
-                                    </div>
-                                </div>
-                            ) : <div/> }
-                    </div>
-                    <div className="col-lg-1 d-none d-sm-block padding-0">
-                        <div className="outer-div rectangle">
-                            <div className="inner-div">
-                                <i className="fas fa-chevron-circle-up"></i>
-                                    <div className="count">{ups || (downs ? <>-{downs}</>: 0)}</div>
-                                <i className="fas fa-chevron-circle-down"></i>
-                            </div>
-                        </div>                    
-                    </div>
+          <div className="card-body">
+            <div className="row">
+              <div className="col-12 col-lg-9" onClick={this.toggelImage}>
+                <div className="padding-20">
+                  <span className="small-view">
+                    Posted by{" "}
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={`https://www.reddit.com/user/${author}`}
+                    >
+                      u/{author}
+                    </a>
+                    ・{timeSince(created_utc * 1000)} ago
+                  </span>
+                  <div className="title padding-t-15">{title}</div>
+                  <div>
+                    {this.state.toggle ? (
+                      <p
+                        className="content"
+                        dangerouslySetInnerHTML={{
+                          __html: decodeHTMLEntities(selftext_html)
+                        }}
+                      />
+                    ) : (
+                      <p className="content">
+                        <Truncate
+                          lines={3}
+                          ellipsis={
+                            <>
+                              ...{" "}
+                              <a
+                                href
+                                className="text-primary pointer"
+                                onClick={this.toggle}
+                              >
+                                Read more
+                              </a>
+                            </>
+                          }
+                        >
+                          {selftext || selftext_html}
+                        </Truncate>
+                      </p>
+                    )}
+                  </div>
+                  {/* <p className="content" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(selftext)}} /> */}
+                  <div className="small-view">
+                    {num_comments ? (
+                      <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={`https://www.reddit.com/${permalink}`}
+                        className="padding-r-10"
+                      >
+                        <i className="far fa-comment" /> {num_comments} Comments
+                      </a>
+                    ) : null}
+                    <a href onClick={() => hide(id)} className="padding-r-10">
+                      <i className="fas fa-ban" /> Hide
+                    </a>
+                    <a
+                      href
+                      onClick={() =>
+                        window.open(
+                          `https://embed.redditmedia.com/widgets/embed?url=https://www.reddit.com/${permalink}`,
+                          "",
+                          "width=600,height=500"
+                        )
+                      }
+                      className="padding-r-10"
+                    >
+                      <i className="fas fa-share" /> Share
+                    </a>
+                  </div>
                 </div>
-
+                {this.state.imgToggle && !(selftext_html && selftext) ? (
+                  <div className="col-12 text-center padding-y-20">
+                    <img src={url} className="img-fluid w-75" alt="・" />
+                  </div>
+                ) : null}
+              </div>
+              <div className="col-lg-2  d-none d-sm-block">
+                {!this.state.imgToggle ? (
+                  <div className="outer-div">
+                    <div className="inner-div" onClick={this.toggelImage}>
+                      {thumbnail ? (
+                        <img
+                          src={thumbnail}
+                          className="img-fluid screen text-right"
+                          alt="・"
+                        />
+                      ) : null}
+                    </div>
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </div>
+              <div className="col-lg-1 d-none d-sm-block padding-0">
+                <div className="outer-div rectangle">
+                  <div className="inner-div">
+                    <i className="fas fa-chevron-circle-up" />
+                    <div className="count">
+                      {ups || (downs ? <>-{downs}</> : 0)}
+                    </div>
+                    <i className="fas fa-chevron-circle-down" />
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div className="gap-5"></div>
-        </>
-    )
-      if (this.state.imgToggle || this.state.toggle) return renderer                                  
-      return <Box>{renderer}</Box>
+        <div className="gap-5" />
+      </>
+    );
+    if (this.state.imgToggle || this.state.toggle) return renderer;
+    return <Box>{renderer}</Box>;
   }
 }
+
+ListView.propTypes = {
+  title: PropTypes.string,
+  selftext: PropTypes.string,
+  selftext_html: PropTypes.string,
+  author: PropTypes.string,
+  ups: PropTypes.number,
+  downs: PropTypes.number,
+  hide: PropTypes.string,
+  id: PropTypes.string,
+  created_utc: PropTypes.any,
+  hidden: PropTypes.any,
+  thumbnail: PropTypes.string,
+  num_comments: PropTypes.number,
+  permalink: PropTypes.string
+};
