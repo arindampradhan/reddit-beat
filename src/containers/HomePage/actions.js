@@ -5,27 +5,49 @@ import {
   SUBREDDIT_FAILURE,
   SUBREDDITLIST,
   SUBREDDITHIDE,
-  SUBREDDITALREADY
+  SUBREDDITALREADY,
+  SUBREDDIT_AFTER
 } from "./constants";
 
-export const getSubreddit = subreddit => (dispatch, getState) => {
+export const getSubreddit = (subreddit, after) => (dispatch, getState) => {
+  // already called case
   const store = getState();
-  if (store && store.subreddit && store.subreddit[subreddit]) {
+  if (store && store.subreddit && store.subreddit[subreddit] && !after) {
     dispatch({ type: SUBREDDITALREADY, payload: subreddit });
     return;
   }
 
-  dispatch({
-    type: SUBREDDIT_REQUEST,
-    payload: subreddit
-  });
+  //   after case
+  let params = {};
+  if (after) {
+    params = {
+      after
+    };
+  }
+
+  // normal case
+  if (!after) {
+    dispatch({
+      type: SUBREDDIT_REQUEST,
+      payload: subreddit
+    });
+  }
   return axios
-    .get(`https://www.reddit.com/r/${subreddit}.json`)
+    .get(`https://www.reddit.com/r/${subreddit}.json`, { params })
     .then(res => {
-      dispatch({
-        type: SUBREDDIT_SUCCESS,
-        payload: { ...res.data, subreddit }
-      });
+      // for after call
+      if (after) {
+        dispatch({
+          type: SUBREDDIT_AFTER,
+          payload: { ...res.data, subreddit, after }
+        });
+      } else {
+        // normal call
+        dispatch({
+          type: SUBREDDIT_SUCCESS,
+          payload: { ...res.data, subreddit }
+        });
+      }
     })
     .catch(err => {
       dispatch({

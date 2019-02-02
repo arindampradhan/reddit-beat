@@ -4,8 +4,13 @@ import actions from "./actions";
 import { NavLink as Link } from "react-router-dom";
 import ListView from "../../components/ListView";
 import ListViewLoader from "../../components/ListView/Loading";
+import Waypoint from "react-waypoint";
+import PropTypes from "prop-types";
 
 class HomePage extends Component {
+  state = {
+    loading: false
+  };
   apiCall(props) {
     const { getSubreddit, getSubList, dispatch, match } = props;
     dispatch(getSubList());
@@ -27,6 +32,25 @@ class HomePage extends Component {
     dispatch(redditHide(id));
   };
 
+  handleWayPointEnter = () => {
+    const { getSubreddit, dispatch, match, subreddit } = this.props;
+    const after = subreddit.after[match.params.subreddit];
+    if (after) {
+      this.setState({
+        loading: true
+      });
+      dispatch(getSubreddit(match.params.subreddit, after))
+        .then(() => {
+          this.setState({
+            loading: false
+          });
+        })
+        .catch(() => {
+          this.setState({ loading: false });
+        });
+    }
+  };
+
   render() {
     const { subredditList, match, subreddit } = this.props;
     const result =
@@ -36,7 +60,6 @@ class HomePage extends Component {
         ? subreddit[match.params.subreddit]
         : [];
     const isEmpty = !result.length && !subreddit.request ? true : false;
-    console.log(result.length);
     return (
       <div className="container-fluid">
         <div className="container">
@@ -84,13 +107,26 @@ class HomePage extends Component {
               ) : (
                 <>
                   {subreddit[match.params.subreddit] &&
+                    subreddit[match.params.subreddit].length &&
                     subreddit[match.params.subreddit].map(item => (
                       <ListView
                         hide={id => this.hide(id)}
                         {...item}
-                        key={item.id}
+                        key={`${match.params.subreddit}-${item.id}`}
                       />
                     ))}
+                  {subreddit[match.params.subreddit] &&
+                  subreddit[match.params.subreddit].length ? (
+                    <>
+                      {this.state.loading ? (
+                        <h2 className="text-center">Loading...</h2>
+                      ) : (
+                        <Waypoint onEnter={this.handleWayPointEnter}>
+                          <h1 className="text-center">See more results</h1>
+                        </Waypoint>
+                      )}
+                    </>
+                  ) : null}
                 </>
               )}
               {isEmpty ? (
@@ -116,6 +152,17 @@ class HomePage extends Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  getSubreddit: PropTypes.func,
+  getSubList: PropTypes.func,
+  redditHid: PropTypes.func,
+  subreddit: PropTypes.shape({
+    ui: PropTypes.array,
+    request: PropTypes.bool,
+    after: PropTypes.object
+  })
+};
 
 const mapState = state => {
   return {

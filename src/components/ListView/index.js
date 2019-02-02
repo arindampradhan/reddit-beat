@@ -4,6 +4,7 @@ import "./index.scss";
 import { Box } from "../Animation";
 import { decodeHTMLEntities, timeSince } from "../../utils/helpers";
 import Truncate from "react-truncate";
+import unescape from "lodash/unescape";
 
 export default class ListView extends Component {
   state = {
@@ -40,9 +41,13 @@ export default class ListView extends Component {
       preview,
       url
     } = this.props;
-    // const [originalImg, ...__] = preview.images[0].resolutions.reverse();
 
-    console.log(this.props);
+    let originalImg;
+    let originalImgUrl = url;
+    try {
+      originalImg = preview.images[0].resolutions.pop();
+      originalImgUrl = unescape(originalImg.url);
+    } catch (error) {}
     if (hidden) return <Box />;
     const renderer = (
       <>
@@ -79,7 +84,7 @@ export default class ListView extends Component {
                             <>
                               ...{" "}
                               <a
-                                href
+                                href="!#"
                                 className="text-primary pointer"
                                 onClick={this.toggle}
                               >
@@ -105,11 +110,15 @@ export default class ListView extends Component {
                         <i className="far fa-comment" /> {num_comments} Comments
                       </a>
                     ) : null}
-                    <a href onClick={() => hide(id)} className="padding-r-10">
+                    <a
+                      href="#!"
+                      onClick={() => hide(id)}
+                      className="padding-r-10"
+                    >
                       <i className="fas fa-ban" /> Hide
                     </a>
                     <a
-                      href
+                      href="#!"
                       onClick={() =>
                         window.open(
                           `https://embed.redditmedia.com/widgets/embed?url=https://www.reddit.com/${permalink}`,
@@ -125,7 +134,11 @@ export default class ListView extends Component {
                 </div>
                 {this.state.imgToggle && !(selftext_html && selftext) ? (
                   <div className="col-12 text-center padding-y-20">
-                    <img src={url} className="img-fluid w-75" alt="・" />
+                    <img
+                      src={originalImgUrl}
+                      className="img-fluid w-75"
+                      alt="・"
+                    />
                   </div>
                 ) : null}
               </div>
@@ -175,11 +188,16 @@ ListView.propTypes = {
   author: PropTypes.string,
   ups: PropTypes.number,
   downs: PropTypes.number,
-  hide: PropTypes.string,
+  hide: PropTypes.func,
   id: PropTypes.string,
   created_utc: PropTypes.any,
   hidden: PropTypes.any,
   thumbnail: PropTypes.string,
   num_comments: PropTypes.number,
   permalink: PropTypes.string
+};
+
+ListView.defaultProps = {
+  title: "NA",
+  author: "NA"
 };

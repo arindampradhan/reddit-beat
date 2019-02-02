@@ -882,16 +882,7 @@ function BootstrapTheme() {
                       placeholder="Password"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleSelect1">Example select</label>
-                    <select className="form-control" id="exampleSelect1">
-                      <option selected>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                  </div>
+
                   <div className="form-group">
                     <label htmlFor="exampleSelect2">
                       Example multiple select
@@ -1200,14 +1191,7 @@ function BootstrapTheme() {
                     </label>
                   </div>
                 </div>
-                <div className="form-group">
-                  <select className="custom-select">
-                    <option selected>Open this select menu</option>
-                    <option value={1}>One</option>
-                    <option value={2}>Two</option>
-                    <option value={3}>Three</option>
-                  </select>
-                </div>
+
                 <div className="form-group">
                   <div className="input-group mb-3">
                     <div className="custom-file">
@@ -1224,9 +1208,7 @@ function BootstrapTheme() {
                       </label>
                     </div>
                     <div className="input-group-append">
-                      <span className="input-group-text" id>
-                        Upload
-                      </span>
+                      <span className="input-group-text">Upload</span>
                     </div>
                   </div>
                 </div>
@@ -2239,7 +2221,7 @@ function BootstrapTheme() {
                 <div className="card-body">
                   <h5 className="card-title">Special title treatment</h5>
                   <h6 className="card-subtitle text-muted">
-                    Support card subtitle
+                    Support card sub{" "}
                   </h6>
                 </div>
                 <img
@@ -2271,9 +2253,7 @@ function BootstrapTheme() {
               <div className="card">
                 <div className="card-body">
                   <h4 className="card-title">Card title</h4>
-                  <h6 className="card-subtitle mb-2 text-muted">
-                    Card subtitle
-                  </h6>
+                  <h6 className="card-subtitle mb-2 text-muted">Card sub </h6>
                   <p className="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
@@ -2344,7 +2324,7 @@ function BootstrapTheme() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                title
+                title="dasdsa"
                 data-container="body"
                 data-toggle="popover"
                 data-placement="left"
@@ -2356,7 +2336,6 @@ function BootstrapTheme() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                title
                 data-container="body"
                 data-toggle="popover"
                 data-placement="top"
@@ -2368,7 +2347,6 @@ function BootstrapTheme() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                title
                 data-container="body"
                 data-toggle="popover"
                 data-placement="bottom"
@@ -2381,7 +2359,6 @@ function BootstrapTheme() {
               <button
                 type="button"
                 className="btn btn-secondary"
-                title
                 data-container="body"
                 data-toggle="popover"
                 data-placement="right"
@@ -2398,7 +2375,6 @@ function BootstrapTheme() {
                 className="btn btn-secondary"
                 data-toggle="tooltip"
                 data-placement="left"
-                title
                 data-original-title="Tooltip on left"
               >
                 Left
@@ -2408,7 +2384,6 @@ function BootstrapTheme() {
                 className="btn btn-secondary"
                 data-toggle="tooltip"
                 data-placement="top"
-                title
                 data-original-title="Tooltip on top"
               >
                 Top
@@ -2418,7 +2393,6 @@ function BootstrapTheme() {
                 className="btn btn-secondary"
                 data-toggle="tooltip"
                 data-placement="bottom"
-                title
                 data-original-title="Tooltip on bottom"
               >
                 Bottom
@@ -2428,7 +2402,6 @@ function BootstrapTheme() {
                 className="btn btn-secondary"
                 data-toggle="tooltip"
                 data-placement="right"
-                title
                 data-original-title="Tooltip on right"
               >
                 Right
